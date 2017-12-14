@@ -1,11 +1,10 @@
 import json
-
 from es import load_similar_sen
 from es import es_search
 from main import put_label_es
 from collections import OrderedDict
 from openpyxl import Workbook
-import pickle
+from progressbar import ProgressBar
 
 def write_list_dic_to_excel(list_dic_name, excel_name='list_dic_to_excel.xlsx'):
     wb = Workbook()
@@ -104,7 +103,9 @@ def get_es_result(tid, excel_name):
     data = load_similar_sen.load_excel_para_sen(excel_name, -1)
     q1_lst = [row["paraphrase"] for row in data]
     q1_es_dic = {}
-    for q1 in q1_lst:
+    bar = ProgressBar(max_value=len(data))
+    for index, q1 in enumerate(q1_lst[:5]):
+        bar.update(index)
         q1_es_dic[q1] = es_search.full_text_search(tid, q1)
     json_name = excel_name[:-5] + ".json"
     with open(json_name, 'w', encoding="utf8") as file:
