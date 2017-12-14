@@ -121,7 +121,7 @@ def full_text_search(tenant_id, raw_question, top_size=128, main_que_type_lst=[]
     :param top_pct:
     :return:
     """
-    print("full_text_search tid:%d que:%s" % (tenant_id, raw_question))
+    #print("full_text_search tid:%d que:%s" % (tenant_id, raw_question))
     seg_lst_from_i, pos_lst_from_i = es_updater.analyze_sentence_from_ltp(raw_question)
 
     seg_lst, pos_lst = pre_sentence(seg_lst_from_i, pos_lst_from_i) #在归一化es分数时用到
@@ -173,7 +173,7 @@ def full_text_search(tenant_id, raw_question, top_size=128, main_que_type_lst=[]
         }
     }
 
-    print(query_body)
+    #print(query_body)
 
     r = HTTP.request("POST",
                      "%s/%s/%s/_search?search_type=dfs_query_then_fetch" % (conf.ES_URL, conf.ES_INDEX_QUERY_NAME, tenant_id),
@@ -185,7 +185,7 @@ def full_text_search(tenant_id, raw_question, top_size=128, main_que_type_lst=[]
 
     es_res = json.loads(r.data.decode())
     es_qa_info = es_res["hits"]["hits"]
-    # print(es_qa_info)
+    # #print(es_qa_info)
     es_res_len = len(es_qa_info)
 
     if es_res_len == 0:
@@ -228,7 +228,7 @@ def full_text_search(tenant_id, raw_question, top_size=128, main_que_type_lst=[]
             continue
 
         # if _source["content-type"] not in content_type:
-        #     print("filter content-type: " + _source["content-type"] + str(_source["raw-question"]))
+        #     #print("filter content-type: " + _source["content-type"] + str(_source["raw-question"]))
         #     continue
 
         know_base_len = count_with_one_tenant(tenant_id)
@@ -281,13 +281,13 @@ def es_score_mean(s, N, n):
     es平均分数
     """
     if N == None:
-        print("warning: input tenant base len is None!")
+        #print("warning: input tenant base len is None!")
         return 0
     if n < 1:
-        print("warning: input word num are small than 1!")
+        #print("warning: input word num are small than 1!")
         return 0
     if s < 0:
-        print("warning: input es score is small than 0!")
+        #print("warning: input es score is small than 0!")
         return 0
 
     return s / np.log(N) / n
@@ -302,10 +302,10 @@ def es_score_normalize(s, N, n):
     score_mean = es_score_mean(s, N, n)
     score_mean = (score_mean - score_mean_average) / score_mean_variance
     score_nor = 1 / (1 + np.exp(-score_mean))
-    print("es score: " + str(score_nor))
+    #print("es score: " + str(score_nor))
     return score_nor
 
 
 if __name__ == '__main__':
     xx = full_text_search(4, "钢琴学多久可以考级?考级是如何进行的？")
-    print(xx)
+    #print(xx)
