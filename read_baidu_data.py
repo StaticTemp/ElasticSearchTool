@@ -1,7 +1,11 @@
 import json
+
+from es import load_similar_sen
+from es import es_search
 from main import put_label_es
 from collections import OrderedDict
 from openpyxl import Workbook
+import pickle
 
 def write_list_dic_to_excel(list_dic_name, excel_name='list_dic_to_excel.xlsx'):
     wb = Workbook()
@@ -33,7 +37,7 @@ def read_label_file(json_name):
 
 
 def gen_all_sen(json_index_lst = []):
-    json_path = "D:/python_work/AnnotationTool/data/output/"
+    json_path = "./data/output/"
     label_data_lst = []
     for index in json_index_lst:
         json_name = json_path + "done_part_" + str(index) + ".json"
@@ -83,15 +87,36 @@ def gen_all_sen(json_index_lst = []):
 
 def load_label2es(new_tid, json_index_lst):
     # json_index_lst = [0, 30, 31, 60, 61]
-    json_path = "D:/python_work/AnnotationTool/data/output/"
+    json_path = "./data/output/"
     label_data_lst = []
     for index in json_index_lst:
         json_name = json_path + "done_part_" + str(index) + ".json"
         label_data_lst.extend(read_label_file(json_name))
     put_label_es(new_tid, label_data_lst)
 
+
+def get_es_result(tid, excel_name):
+    """
+    :param tid:
+    :param excel_name:
+    :return:
+    """
+    data = load_similar_sen.load_excel_para_sen(excel_name, -1)
+    q1_lst = [row["paraphrase"] for row in data]
+    q1_es_dic = {}
+    for q1 in q1_lst[:5]:
+        q1_es_dic[q1] = es_search.full_text_search(tid, q1)
+    json_name = excel_name[:-5] + ".json"
+    with open(json_name, 'w', encoding="utf8") as file:
+        json.dump(q1_es_dic, file)
+
 if __name__ == '__main__':
-    json_index_lst = [0, 1, 3, 30, 31, 32, 33, 34, 60, 61, 62]
+    # json_index_lst = [0, 1, 3, 30, 31, 32, 33, 34, 60, 61, 62]
     # load_label2es(4, json_index_lst)
-    sens = gen_all_sen(json_index_lst)
-    print(sens)
+    # sens = gen_all_sen(json_index_lst)
+    # print(sens)
+
+    get_es_result(4, "D:/evaluation/data/测试数据/baidu_tid4_0_1_3_30_31_32_33_34_60_61_62.xlsx")
+    with open("D:/evaluation/data/测试数据/baidu_tid4_0_1_3_30_31_32_33_34_60_61_62.json", 'r', encoding='utf8') as file:
+        data = json.load(file)
+    print(data)

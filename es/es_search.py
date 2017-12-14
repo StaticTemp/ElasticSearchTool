@@ -1,9 +1,9 @@
-import es_updater
+
 import re
 import json
 
 import urllib3
-
+from es import es_updater
 from es import conf
 from es import question_classification_interface
 import numpy as np
@@ -84,7 +84,10 @@ def get_stopwords(file="./data/ext_stopword.dic"):
         return set(map(lambda str: str.strip("\n"), lines))
 
 # 加载停用词
-STOPWORDS = get_stopwords()
+try:
+    STOPWORDS = get_stopwords()
+except:
+    STOPWORDS = get_stopwords("./es/data/ext_stopword.dic")
 
 
 HTTP = urllib3.PoolManager()

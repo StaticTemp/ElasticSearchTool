@@ -55,6 +55,7 @@ def put_t3_es():
         print(i)
     update(qa_list, len(qa_list))
 
+
 def put_label_es(tid, label_data_lst):
     """
     :param tid: int， 新的知识库id
