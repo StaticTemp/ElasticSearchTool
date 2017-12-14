@@ -116,7 +116,7 @@ if __name__ == '__main__':
     # sens = gen_all_sen(json_index_lst)
     # print(sens)
 
-    get_es_result(4, "D:/evaluation/data/测试数据/baidu_tid4_0_1_3_30_31_32_33_34_60_61_62.xlsx")
-    with open("D:/evaluation/data/测试数据/baidu_tid4_0_1_3_30_31_32_33_34_60_61_62.json", 'r', encoding='utf8') as file:
+    get_es_result(4, "./data/测试数据/baidu_tid4_0_1_3_30_31_32_33_34_60_61_62.xlsx")
+    with open("./data/测试数据/baidu_tid4_0_1_3_30_31_32_33_34_60_61_62.json", 'r', encoding='utf8') as file:
         data = json.load(file)
     print(data)

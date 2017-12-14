@@ -102,7 +102,7 @@ def count_with_one_tenant(tenant_id):
     r = HTTP.request("GET", "%s/%s/%s/_count" % (conf.ES_URL, conf.ES_INDEX_NAME, tenant_id))
     if r.status != 200:
         # 如果ES发生错误，尽快让问题显现
-        logger.info("es error.")
+        print("es error.")
         return None
     else:
         data = json.loads(r.data.decode())
@@ -180,7 +180,7 @@ def full_text_search(tenant_id, raw_question, top_size=128, main_que_type_lst=[]
                      body=json.dumps(query_body).encode("utf-8"))
 
     if r.status != 200:
-        logger.info("es return error")
+        print("es return error")
         return []
 
     es_res = json.loads(r.data.decode())

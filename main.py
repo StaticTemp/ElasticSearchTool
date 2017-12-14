@@ -4,6 +4,7 @@ import json
 from pprint import pprint
 
 from es.es_getter import init, init_index
+from es.es_search import full_text_search
 from es.es_updater import analyze_sentence_from_ltp, analyze_sentence_from_es, update
 
 """
@@ -84,8 +85,10 @@ def put_label_es(tid, label_data_lst):
 
 
 if __name__ == '__main__':
-    put_t3_es()
+    # put_t3_es()
     # init(0)
     # init_index('ES_INDEX_NAME')
+    xx = full_text_search(4, "钢琴学多久可以考级?考级是如何进行的？")
+    print(xx)
 
 
