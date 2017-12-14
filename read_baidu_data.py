@@ -104,7 +104,7 @@ def get_es_result(tid, excel_name):
     data = load_similar_sen.load_excel_para_sen(excel_name, -1)
     q1_lst = [row["paraphrase"] for row in data]
     q1_es_dic = {}
-    for q1 in q1_lst[:5]:
+    for q1 in q1_lst:
         q1_es_dic[q1] = es_search.full_text_search(tid, q1)
     json_name = excel_name[:-5] + ".json"
     with open(json_name, 'w', encoding="utf8") as file:
