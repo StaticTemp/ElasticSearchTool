@@ -124,13 +124,15 @@ def full_text_search(tenant_id, raw_question, top_size=128, main_que_type_lst=[]
     #print("full_text_search tid:%d que:%s" % (tenant_id, raw_question))
     seg_lst_from_i, pos_lst_from_i = es_updater.analyze_sentence_from_ltp(raw_question)
 
+    print(seg_lst_from_i, pos_lst_from_i)
+
     seg_lst, pos_lst = pre_sentence(seg_lst_from_i, pos_lst_from_i) #在归一化es分数时用到
 
     seg_lst_from_i = json.dumps(seg_lst_from_i, ensure_ascii=False)
     pos_lst_from_i = json.dumps(pos_lst_from_i, ensure_ascii=False)
 
     intention_from_i = question_classification_interface.get_intention_all(raw_question)
-
+    print(intention_from_i)
     # 生成main_que_type限制集
     mqt_limit_lst = list()
     for number in main_que_type_lst:

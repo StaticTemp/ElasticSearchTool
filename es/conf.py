@@ -8,6 +8,7 @@
 import json
 
 # elastic search 配置信息
+# ES_HOST = "39.106.49.104"
 ES_HOST = "192.168.240.3"
 ES_PORT = 9200
 ES_URL = "http://%s:%s" % (ES_HOST, ES_PORT)
@@ -113,7 +114,7 @@ QA_ID_EXT = "0"
 # ES中真实的问答对ID，由 “主问题ID” 和 “相似问题ID” 前后两部分组成，如果是主问题，则后部分指定为QA_ID_EXT
 ES_QA_ID = "%s-%s"
 # LTP segment info
-LTP_SERVER_URL = "http://192.168.240.11:9088/ltp"
+LTP_SERVER_URL = "http://192.168.240.3:9088/ltp"
 
-PA_HOST = "192.168.240.3:9996"
+PA_HOST = "192.168.240.3:9997"
 

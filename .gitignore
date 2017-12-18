@@ -1,2 +1,5 @@
 /.idea
 /es/__pycache__
+*.pyc
+*.pyc
+es/__pycache__/question_classification_interface.cpython-36.pyc

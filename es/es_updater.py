@@ -70,6 +70,7 @@ def update_to_es(qa_lst, batch_len=1000):
     actions = list()
     s = time.time()
     for index, item in enumerate(qa_lst):
+        print(item)
         res = analyze_sentence_from_ltp(item["raw-question"])
 
         # ltp_word_lst = res["seg"]
@@ -150,6 +151,7 @@ def update(qa_list, batch_len=1000):
 
     batch_lst = []
     for index, qa in enumerate(qa_list):
+        print(qa)
         tenant_id = qa["tenant-id"]
         qa_id = qa["qa-id"]
         raw_question = qa["raw-question"]
